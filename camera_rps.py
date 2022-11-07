@@ -1,6 +1,5 @@
 # %%
 import random
-from rock_paper_scissors import prediction
 import numpy as np
 import cv2
 from keras.models import load_model
@@ -11,38 +10,37 @@ cap = cv2.VideoCapture(0)
 data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
 rps = [0, 1, 2] # 0 = rock, 1 = paper, 2 = scissors
+rps_string = ["Rock", "Paper", "Scissors"]
 def get_computer_choice():
     computer_choice = random.choice(rps)
-    print(computer_choice)
     return computer_choice
 
-# def get_user_choice():
-    # user_choice = input("Please choose between rock, paper or scissors")
-    # user_choice = user_choice.lower()
-    # if user_choice in rps:
-        #print(user_choice)
-    # else:
-        #print("Please choose between rock, paper or scissors")
-    # return user_choice
-    
 
 def get_winner(computer_choice, user_choice):
 
     if computer_choice == user_choice:
+        print("The computer chose", rps_string[computer_choice])
         print("It's a tie!")
+   
     elif computer_choice == 0 and user_choice == 2: # rock vs scissors
+        print("The computer chose", rps_string[computer_choice])
         print("You lost")
+        
     elif computer_choice == 1 and user_choice == 0: # paper vs rock
+        print("The computer chose", rps_string[computer_choice])
         print("You lost")
+        
     elif computer_choice == 2 and user_choice == 1: # scissors vs paper
+        print("The computer chose", rps_string[computer_choice])
         print("You lost")
+        
     elif user_choice == 3: # i.e user chooses nothing
         print("Please choose between rock, paper or scissors")
-    else:
+    else: # Only considered computer wins in if statements since anything else is a user win
+        print("The computer chose", rps_string[computer_choice])
         print("You won!")
+        
 
-    
-    
 def get_prediction():
     while True: 
         ret, frame = cap.read()
@@ -60,22 +58,28 @@ def get_prediction():
     cap.release()
     # Destroy all the windows
     cv2.destroyAllWindows()
-    
+
     user_choice = np.argmax(prediction)
     if user_choice == 0:
-        print("You chose rock")
+        print("You chose Rock")
     elif user_choice == 1:
-        print("You've chosen paper")
+        print("You chose Paper")
     elif user_choice == 2:
-        print("You've chosen scissors")
+        print("You chose Scissors")
     else:
         print("You chose nothing")
     return user_choice
 
 def play():
     print("Please choose between rock, paper or scissors when the countdown is complete then press q when finished")
-    
-    get_winner(get_computer_choice(), get_prediction())
+    max_time = 5
+
+    start_time = time.time()
+    while (time.time() - start_time) < max_time:
+
+
+        get_winner(get_computer_choice(), get_prediction())
+        
     
 play()
 
