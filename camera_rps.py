@@ -71,13 +71,11 @@ def get_prediction():
     return user_choice
 
 def play():
-    print("Please choose between rock, paper or scissors when the countdown is complete then press q when finished")
-    max_time = 5
+    print("You have 5 seconds to choose between rock, paper or scissors. Please press q when finsihed.")
+    max_time = 9
 
     start_time = time.time()
     while (time.time() - start_time) < max_time:
-
-
         get_winner(get_computer_choice(), get_prediction())
         
     
