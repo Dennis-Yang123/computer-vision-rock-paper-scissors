@@ -122,7 +122,7 @@ def play(model):
     while True:
         if game.user_wins == 3:
             print("Congratulations you have won 3 times")
-            restart = input("Press c if you want to restart")
+            restart = input("Press c if you want to restart, or press anything else if you want to quit.")
             if restart.lower() == "c":
                 game.computer_wins = 0
                 game.user_wins = 0
@@ -134,7 +134,7 @@ def play(model):
             
         elif game.computer_wins == 3:
             print("You lose the computer won 3 times")
-            restart = input("Press c if you want to restart")
+            restart = input("Press c if you want to restart, or press anything else if you want to quit.")
             if restart.lower() == "c":
                 game.computer_wins = 0
                 game.user_wins = 0
