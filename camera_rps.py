@@ -15,9 +15,7 @@ class RockPaperScissors:
     def __init__(self, model):
         self.model = model
         self.computer_choice = random.choice(rps)
-        # self.prediction = model.predict(data)
         self.user_wins = 0
-        # self.user_choice = np.argmax(self.prediction)
         self.computer_wins = 0
         self.count= 5
 
@@ -64,7 +62,7 @@ class RockPaperScissors:
         data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
         user_victory = "User wins: " + str(self.user_wins)
         pc_victory = "Computer wins: " + str(self.computer_wins)
-        pc_choice = "The Computer chose " + str(rps_string[self.computer_choice])
+        # pc_choice = "The Computer chose " + str(rps_string[self.computer_choice])
         time_now = time.time()
         while time.time() < time_now + self.count: 
             ret, frame = cap.read()
@@ -149,7 +147,7 @@ def play(model):
             game.get_computer_choice()
             game.get_prediction()
         
-# game = RockPaperScissors(model)  
+
 play(model)
-# game.countdown()
+
 # %%
