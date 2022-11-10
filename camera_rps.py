@@ -9,7 +9,7 @@ model = load_model('keras_model.h5')
 
 
 rps = [0, 1, 2] # 0 = rock, 1 = paper, 2 = scissors
-rps_string = ["Rock", "Paper", "Scissors"]
+rps_string = ["Rock", "Paper", "Scissors", "Nothing"]
 class RockPaperScissors:
 
     def __init__(self, model):
@@ -62,7 +62,9 @@ class RockPaperScissors:
     def get_prediction(self):
         cap = cv2.VideoCapture(0)
         data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-        
+        user_victory = "User wins: " + str(self.user_wins)
+        pc_victory = "Computer wins: " + str(self.computer_wins)
+        pc_choice = "The Computer chose " + str(rps_string[self.computer_choice])
         time_now = time.time()
         while time.time() < time_now + self.count: 
             ret, frame = cap.read()
@@ -70,8 +72,13 @@ class RockPaperScissors:
             image_np = np.array(resized_frame)
             normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
             data[0] = normalized_image
-            # cv2.putText(frame, rps_string[user_choice], (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 0), 3)
             prediction = model.predict(data)
+            cv2.putText(frame, rps_string[np.argmax(prediction)], (0, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 0), 3)
+            cv2.putText(frame, user_victory, (0, 100), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 0), 3)
+            cv2.putText(frame, pc_victory, (0, 150), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 0), 3)
+            cv2.putText(frame, str(int((time_now + self.count - time.time()))), (0, 200), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 0), 3)
+            # cv2.putText(frame, pc_choice, (0, 200), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 0), 3)
+
             cv2.imshow('frame', frame)
         # Press q to close the window
             print(prediction)
@@ -115,13 +122,32 @@ def play(model):
     game = RockPaperScissors(model)
     game.countdown()
     while True:
-        if game.user_wins < 3:
+        if game.user_wins == 3:
+            print("Congratulations you have won 3 times")
+            restart = input("Press c if you want to restart")
+            if restart.lower() == "c":
+                game.computer_wins = 0
+                game.user_wins = 0
+                game.get_computer_choice()
+                game.get_prediction()
+            
+            else:
+                break
+            
+        elif game.computer_wins == 3:
+            print("You lose the computer won 3 times")
+            restart = input("Press c if you want to restart")
+            if restart.lower() == "c":
+                game.computer_wins = 0
+                game.user_wins = 0
+                game.get_computer_choice()
+                game.get_prediction()
+                
+            else:
+                break             
+        else:
             game.get_computer_choice()
             game.get_prediction()
-            
-        else:
-            print("Congratulations you have won 3 times")
-            break
         
 # game = RockPaperScissors(model)  
 play(model)
