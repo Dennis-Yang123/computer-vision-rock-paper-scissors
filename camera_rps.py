@@ -7,11 +7,10 @@ import time
 
 model = load_model('keras_model.h5')
 
-
 rps = [0, 1, 2] # 0 = rock, 1 = paper, 2 = scissors
 rps_string = ["Rock", "Paper", "Scissors", "Nothing"]
-class RockPaperScissors:
 
+class RockPaperScissors:
     def __init__(self, model):
         self.model = model
         self.computer_choice = random.choice(rps)
@@ -23,9 +22,7 @@ class RockPaperScissors:
         self.computer_choice = random.choice(rps)
         return ()
 
-
     def get_winner(self, user_choice):
-
         if self.computer_choice == user_choice:
             print("The computer chose", rps_string[self.computer_choice])
             print("It's a tie!")
@@ -50,13 +47,13 @@ class RockPaperScissors:
             
         elif user_choice == 3: # i.e user chooses nothing
             print("Please choose between rock, paper or scissors")
+
         else: # Only considered computer wins in if statements since anything else is a user win
             print("The computer chose", rps_string[self.computer_choice])
             print("You won!")
             self.user_wins += 1
             return()
             
-
     def get_prediction(self):
         cap = cv2.VideoCapture(0)
         data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
@@ -101,8 +98,6 @@ class RockPaperScissors:
             print("You chose nothing")
         return (user_choice)
         
-    
-    
     def countdown(self):
         cap = cv2.VideoCapture(0)
         time_zero = time.time()
@@ -113,8 +108,6 @@ class RockPaperScissors:
             cv2.imshow("frame", frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-
-
 
 def play(model):    
     game = RockPaperScissors(model)
@@ -148,6 +141,7 @@ def play(model):
             game.get_prediction()
         
 
-play(model)
+if __name__ == "__main__":
+    play(model)
 
 # %%

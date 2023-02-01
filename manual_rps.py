@@ -1,6 +1,7 @@
 # %%
 import random
 rps = ["rock", "paper", "scissors"]
+
 def get_computer_choice():
     computer_choice = random.choice(rps)
     print(computer_choice)
@@ -15,7 +16,6 @@ def get_user_choice():
         print("Please choose between rock, paper or scissors")
     return user_choice
     
-
 def get_winner(computer_choice, user_choice):
     if computer_choice == user_choice:
         print("It's a tie!")
@@ -28,10 +28,10 @@ def get_winner(computer_choice, user_choice):
     else:
         print("You won!")
     
-
 def play():
     get_winner(get_computer_choice(), get_user_choice())
 
-play()
+if __name__ == "__main__":
+    play()
 
 # %%
